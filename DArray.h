@@ -16,6 +16,14 @@ public:
 		data = nullptr;
 	}
 
+	DArray(DArray<type> &k){
+		length = k.length;
+		data = new type[length];
+		for(int i = 0; i<length; i++){
+			data[i] = k.data[i];
+		}
+	}
+
 	DArray(int number){
 		length = number;
 		data = new type[length];

@@ -158,6 +158,11 @@ All of the Data structure I'll be implementing is written in C++
         - Ex2: will throw an error because array doesn't have index 100th.
         ---
         #### 17. clear(): delete everything and reset length to 0.
+        ```C++
+        DArray<int> array = {100, 200, 300};
+        array.clear();
+        ```
+        - array won't have any element left.
         ---
         #### 18. print(): simply print all the value of the array (recommend for debugging only).
         ```C++

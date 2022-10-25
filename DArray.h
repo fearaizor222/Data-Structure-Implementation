@@ -202,7 +202,8 @@ public:
 		data = temp;
 	}
 
-	void addIndex(int index, type number){
+	void addIndex(type number, int index){
+		if(index > length || index < 0) throw std::invalid_argument("Invalid index");
 		length++;
 		resize(length);
 		type temp1 = data[index];
@@ -231,6 +232,7 @@ public:
 	}
 
 	void deleteIndex(int index){
+	if(index > length || index < 0) throw std::invalid_argument("Invalid index");
 		length--;
 		type *temp = new type[length];
 		for(int i = 0, j = 0; i<length+1; i++){

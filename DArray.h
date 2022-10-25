@@ -21,6 +21,14 @@ public:
 		data = new type[length];
 	}
 
+	DArray(int number, int element){
+		length = number;
+		data = new type[length];
+		for(int i = 0; i<length; i++){
+			data[i] = element;
+		}
+	}
+
 	DArray(type arr[], int number){
 		length = number;
 		data = new type[length];

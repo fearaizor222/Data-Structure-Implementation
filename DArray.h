@@ -258,15 +258,6 @@ public:
 		std::cout<<"\n";
 	}
 
-	void print(const std::string &s, bool index = false, bool val = false){
-		for(int i = 0; i<length; i++){
-			if(index == false && val == false) printf(s.c_str());
-			if(index == true && val == false)  printf(s.c_str(), i);
-			if(index == true && val == true)   printf(s.c_str(), i, data[i]);
-			if(index == false && val == true)  printf(s.c_str(), data[i]);
-		}
-	}
-
 	~DArray(){
 		delete[] data;
 	}

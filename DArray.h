@@ -72,6 +72,31 @@ public:
 	// 	return *this;
 	// }
 
+	void sort(bool reverse = false){
+		if(reverse){
+			for(int i = 0; i<length; i++){
+				int index = i;
+
+				for(int j = i+1; j<length; j++){
+					if(data[index] < data[j]) index = j;
+				}
+
+				this->swap(i, index);
+			}
+		}
+		else{
+			for(int i = 0; i<length; i++){
+				int index = i;
+
+				for(int j = i+1; j<length; j++){
+					if(data[index] > data[j]) index = j;
+				}
+
+				this->swap(i, index);
+			}
+		}
+	}
+
 	void assign(const DArray<type> &k){
 		this->resize(k.length);
 		for(int i = 0; i<k.length; i++){

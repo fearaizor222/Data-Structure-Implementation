@@ -171,6 +171,13 @@ All of the Data structure I'll be implementing is written in C++
         ```
         - Output: 1 2 3 \n
         ---
+        #### 19. sort(bool reverse = false): using selection sort algorithm to sort the array.
+        ```C++
+        DArray<int> array = {5, 2, 9, 1, 7};
+        array.sort();
+        array.sort(true);
+        ```
+        - Output: 1 2 5 7 9 and 9 7 5 2 1.
 ## LinkedList
 
 ### TO BE CONTINUE

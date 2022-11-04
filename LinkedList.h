@@ -13,6 +13,11 @@ enum Mode{
 template<class type> struct _Singly{
     type data;
     _Singly<type> *next;
+
+    _Singly(type data){
+        this->data = data;
+        next = nullptr;
+    }
 };
 
 template<class type> struct _Doubly{
@@ -54,9 +59,7 @@ template<class type> class LinkedList<type, Singly>{
         }
 
         void addBack(type data){
-            Node *temp = new Node;
-            temp->data = data;
-            temp->next = nullptr;
+            Node *temp = new Node(data);
 
             if(head == nullptr){
                 head = tail = temp;
@@ -65,6 +68,39 @@ template<class type> class LinkedList<type, Singly>{
             else{
                 tail->next = temp;
                 tail = temp;
+                length++;
+            }
+        }
+
+        void addFront(type data){
+            Node *temp = new Node(data);
+
+            if(head == nullptr){
+                head = tail = temp;
+                length = 1;
+            }
+            else{
+                temp->next = head;
+                head = temp;
+                length++;
+            }
+        }
+
+        void addIndex(type data, int index){
+            if(index <= 0) this->addFront(data);
+            else if(index > length) this->addBack(data);
+            else{
+                Node *temp = new Node(data);
+                int internal_index = 0;
+                Node *temp_head = head;
+
+                while(internal_index < index - 1){
+                    temp_head = temp_head->next;
+                    internal_index++;
+                }
+
+                temp->next = temp_head->next;
+                temp_head->next = temp;
                 length++;
             }
         }

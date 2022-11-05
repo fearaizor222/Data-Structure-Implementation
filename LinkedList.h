@@ -24,12 +24,12 @@ template<class type> struct _Doubly{
     type data;
     _Doubly<type> *next;
     _Doubly<type> *prev;
-};
 
-template<class type> struct _Circular{
-    type data;
-    _Circular<type> *next;
-    _Circular<type> *prev;
+    _Doubly(type data){
+        this->data = data;
+        next = nullptr;
+        prev = nullptr;
+    }
 };
 
 template<class type, Mode mode> class LinkedList{};
@@ -102,6 +102,78 @@ template<class type> class LinkedList<type, Singly>{
                 temp->next = temp_head->next;
                 temp_head->next = temp;
                 length++;
+            }
+        }
+
+        void deleteBack(){
+            if(head == nullptr) return;
+            else if(head->next == nullptr){
+                Node *temp = head;
+                delete temp;
+                head = nullptr;
+
+                length--;
+                return;
+            }
+            else{
+                Node *temp1 = head;
+
+                while(temp1->next->next != nullptr){
+                    temp1 = temp1->next;
+                }
+
+                Node *temp2 = temp1->next;
+                temp1->next = nullptr;
+                delete temp2;
+
+                length--;
+            }
+
+        }
+
+        void deleteFront(){
+            if(head == nullptr) return;
+            else if(head->next == nullptr){
+                Node *temp = head;
+                delete temp;
+                head = nullptr;
+
+                length--;
+                return;
+            }
+            else{
+                Node *temp = head;
+                head = head->next;
+                delete temp;
+
+                length--;
+            }
+        }
+
+        void deleteIndex(int index){
+            if(head == nullptr) return;
+            else if(head->next == nullptr){
+                Node *temp = head;
+                delete temp;
+                head = nullptr;
+
+                length--;
+                return;
+            }
+            else{
+                Node *temp1 = head;
+                int counter = 0;
+
+                while(temp1->next->next != nullptr && counter < index-1){
+                    temp1 = temp1->next;
+                    counter++;
+                }
+
+                Node *temp2 = temp1->next;
+                temp1->next = temp2->next;
+                delete temp2;
+
+                length--;
             }
         }
 

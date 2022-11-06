@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <initializer_list>
+#include "DArray.h"
 
 enum Mode{
     Circular,
@@ -44,6 +45,18 @@ template<class type> class LinkedList<type, Singly>{
             while(temp != nullptr){
                 this->addBack(temp->data);
                 temp = temp->next;
+            }
+        }
+
+        LinkedList(type *ptr, int length) : LinkedList(){
+            for(int i = 0; i<length; i++){
+                this->addBack(ptr[i]);
+            }
+        }
+
+        LinkedList(DArray<type> other){
+            for(int i = 0; i<other.size(); i++){
+                this->addBack(other[i]);
             }
         }
 

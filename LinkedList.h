@@ -10,33 +10,20 @@ enum Mode{
     Doubly
 };
 
-template<class type> struct _Singly{
-    type data;
-    _Singly<type> *next;
-
-    _Singly(type data){
-        this->data = data;
-        next = nullptr;
-    }
-};
-
-template<class type> struct _Doubly{
-    type data;
-    _Doubly<type> *next;
-    _Doubly<type> *prev;
-
-    _Doubly(type data){
-        this->data = data;
-        next = nullptr;
-        prev = nullptr;
-    }
-};
-
 template<class type, Mode mode> class LinkedList{};
 
 template<class type> class LinkedList<type, Singly>{
     private:
-        using Node = _Singly<type>;
+        struct Node{
+            type data;
+            Node *next;
+
+            Node(type data){
+                this->data = data;
+                next = nullptr;
+            }
+        };
+
         Node *head;
         Node *tail;
         int length;
@@ -226,6 +213,28 @@ template<class type> class LinkedList<type, Singly>{
             head = tail = nullptr;
             length = 0;
         }
+};
+
+template<class type> class LinkedList<type, Doubly>{
+    private:
+        struct Node{
+            type data;
+            Node *next;
+            Node *prev;
+
+            Node(type data){
+                this->data = data;
+                next = nullptr;
+                prev = nullptr;
+            }
+        };
+
+        Node *head;
+        Node *tail;
+        int length;
+
+    public:
+
 };
 
 #endif

@@ -1,6 +1,6 @@
 
 # Data Structure
-All of the Data structure I'll be implementing is written in C++
+All of the Data structure I'll be implementing is written in C++ 11
 
 ## DArray
 - Short for Dynamic Array.

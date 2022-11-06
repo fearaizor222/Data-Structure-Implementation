@@ -181,12 +181,6 @@ public:
 		return index;
 	}
 
-	void swap(int index1, int index2){
-		type temp = data[index1];
-		data[index1] = data[index2];
-		data[index2] = temp;
-	}
-
 	void fill(type number){
 		for(int i = 0; i<length; i++){
 			data[i] = number;

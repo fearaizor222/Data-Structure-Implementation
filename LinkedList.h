@@ -29,14 +29,21 @@ template<class type> class LinkedList<type, Singly>{
             length = 0;
         }
 
-        LinkedList(std::initializer_list<type> data){
-            head = tail = nullptr;
-            length = 0;
-            typename std::initializer_list<type>::iterator it = data.begin();
+        LinkedList(std::initializer_list<type> other) : LinkedList(){
+            typename std::initializer_list<type>::iterator it = other.begin();
 
-            while(it != data.end()){
+            while(it != other.end()){
                 this->addBack(*it);
                 it++;
+            }
+        }
+
+        LinkedList(LinkedList<type, Singly> &other) : LinkedList(){
+            Node *temp = other.head;
+
+            while(temp != nullptr){
+                this->addBack(temp->data);
+                temp = temp->next;
             }
         }
 

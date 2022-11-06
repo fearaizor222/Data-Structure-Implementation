@@ -235,4 +235,24 @@ template<class type> class LinkedList<type, Doubly>{
         int length;
 };
 
+template<class type> class LinkedList<type, Circular>{
+    public:
+        struct Node{
+            type data;
+            Node *next;
+            Node *prev;
+
+            Node(type data){
+                this->data = data;
+                next = nullptr;
+                prev = nullptr;
+            }
+        };
+
+    private:
+        Node *head;
+        Node *tail;
+        int length;
+};
+
 #endif

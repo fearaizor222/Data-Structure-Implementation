@@ -13,7 +13,7 @@ enum Mode{
 template<class type, Mode mode> class LinkedList{};
 
 template<class type> class LinkedList<type, Singly>{
-    private:
+    public:
         struct Node{
             type data;
             Node *next;
@@ -24,11 +24,6 @@ template<class type> class LinkedList<type, Singly>{
             }
         };
 
-        Node *head;
-        Node *tail;
-        int length;
-
-    public:
         LinkedList(){
             head = tail = nullptr;
             length = 0;
@@ -213,10 +208,15 @@ template<class type> class LinkedList<type, Singly>{
             head = tail = nullptr;
             length = 0;
         }
+
+    private:
+        Node *head;
+        Node *tail;
+        int length;
 };
 
 template<class type> class LinkedList<type, Doubly>{
-    private:
+    public:
         struct Node{
             type data;
             Node *next;
@@ -229,12 +229,10 @@ template<class type> class LinkedList<type, Doubly>{
             }
         };
 
+    private:
         Node *head;
         Node *tail;
         int length;
-
-    public:
-
 };
 
 #endif

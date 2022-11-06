@@ -84,26 +84,21 @@ All of the Data structure I'll be implementing is written in C++ 11
         std::cout << array.indexOf(7) << std::endl;
         ```
         ---
-        #### 7. swap(int dest1, int dest2): swap 2 elements at index dest1 and index dest2.
-        ```C++
-        array.swap(3, 6);
-        ```
-        ---
-        #### 8. fill(type number): fill in from start to end with the chosen number.
+        #### 7. fill(type number): fill in from start to end with the chosen number.
         ```C++
         DArray<int> array = {1, 2, 3};
         array.fill(7);
         ```
         - array will look like {7, 7, 7}.
         ---
-        #### 9. fill_n(type number, int time): fill in number of time from start with chose number.
+        #### 8. fill_n(type number, int time): fill in number of time from start with chose number.
         ```C++
         DArray<int> array = {1, 2, 3, 4, 5};
         array.fill(7, 3);
         ```
         - array will look like {7, 7, 7, 4, 5}.
         ---
-        #### 10. extend(DArray<type> array): append DArray to original array.
+        #### 9. extend(DArray<type> array): append DArray to original array.
         ```C++
         DArray<int> array1 = {1, 2, 3};
         DArray<int> array2 = {1, 2, 3};
@@ -111,21 +106,21 @@ All of the Data structure I'll be implementing is written in C++ 11
         ```
         - array1 will look like {1, 2, 3, 1, 2, 3}.
         ---
-        #### 11. addBack(type number): append value to the back of the array.
+        #### 10. addBack(type number): append value to the back of the array.
         ```C++
         DArray<int> array = {1, 2, 3};
         array.addBack(7);
         ```
         - array will look like {1, 2, 3, 7}.
         ---
-        #### 12. addFront(type number): append value to the front of the array.
+        #### 11. addFront(type number): append value to the front of the array.
         ```C++
         DArray<int> array = {1, 2, 3};
         array.addFront(7);
         ```
         - array will look like {7, 1, 2, 3}.
         ---
-        #### 13. addIndex(type number, int index): insert value to the chosen index of the array.
+        #### 12. addIndex(type number, int index): insert value to the chosen index of the array.
         ```C++
         DArray<int> array = {1, 2, 3};
         array.addIndex(7, 1);     // Example 1
@@ -134,21 +129,21 @@ All of the Data structure I'll be implementing is written in C++ 11
         - Ex1: array will look like {1, 7, 2, 3}.
         - Ex2: will throw an error because array doesn't have index 100th.
         ---
-        #### 14. deleteBack(): delete value to the back of the array.
+        #### 13. deleteBack(): delete value to the back of the array.
         ```C++
         DArray<int> array = {1, 2, 3};
         array.deleteBack();
         ```
         - array will look like {1, 2}.
         ---
-        #### 15. deleteFront(): delete value to the front of the array.
+        #### 14. deleteFront(): delete value to the front of the array.
         ```C++
         DArray<int> array = {1, 2, 3};
         array.deleteFront();
         ```
         - array will look like {2, 3}.
         ---
-        #### 16. deleteIndex(int index): delete value to the chosen index of the array.
+        #### 15. deleteIndex(int index): delete value to the chosen index of the array.
         ```C++
         DArray<int> array = {1, 2, 3};
         array.deleteIndex(1);     // Example 1
@@ -157,21 +152,21 @@ All of the Data structure I'll be implementing is written in C++ 11
         - Ex1: array will look like {1, 3}.
         - Ex2: will throw an error because array doesn't have index 100th.
         ---
-        #### 17. clear(): delete everything and reset length to 0.
+        #### 16. clear(): delete everything and reset length to 0.
         ```C++
         DArray<int> array = {100, 200, 300};
         array.clear();
         ```
         - array won't have any element left.
         ---
-        #### 18. print(): simply print all the value of the array (recommend for debugging only).
+        #### 17. print(): simply print all the value of the array (recommend for debugging only).
         ```C++
         DArray<int> array = {1, 2, 3};
         array.print();
         ```
         - Output: 1 2 3 \n
         ---
-        #### 19. sort(bool reverse = false): using selection sort algorithm to sort the array.
+        #### 18. sort(bool reverse = false): using selection sort algorithm to sort the array.
         ```C++
         DArray<int> array = {5, 2, 9, 1, 7};
         array.sort();

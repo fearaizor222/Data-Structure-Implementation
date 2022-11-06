@@ -60,6 +60,15 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
+        void extend(LinkedList<type, Singly> &other){
+            Node *temp = other.head;
+            
+            while(temp != nullptr){
+                this->addBack(temp->data);
+                temp = temp->next;
+            }
+        }
+
         type &at(int index){
             Node *temp = head;
             int internal_index = 0;
@@ -148,6 +157,7 @@ template<class type> class LinkedList<type, Singly>{
 
                 Node *temp2 = temp1->next;
                 temp1->next = nullptr;
+                tail = temp1;
                 delete temp2;
 
                 length--;

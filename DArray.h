@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <initializer_list>
-#include <string>
+// #include <string>
 
 template<class type> class DArray {
 private:

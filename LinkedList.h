@@ -54,6 +54,12 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
+        LinkedList(DArray<type> other) : LinkedList(){
+            for(int i = 0; i<other.size(); i++){
+                this->addBack(other[i]);
+            }
+        }
+
         LinkedList<type, Singly> &operator=(const LinkedList<type, Singly> &other){
             if(this == &other) return *this;
 
@@ -113,6 +119,21 @@ template<class type> class LinkedList<type, Singly>{
             while(temp != nullptr){
                 this->addBack(temp->data);
                 temp = temp->next;
+            }
+        }
+
+        void extend(std::initializer_list<type> other){
+            typename std::initializer_list<type>::iterator it = other.begin();
+
+            while(it != other.end()){
+                this->addBack(*it);
+                it++;
+            }
+        }
+
+        void extend(DArray<type> other){
+            for(int i = 0; i<other.size(); i++){
+                this->addBack(other[i]);
             }
         }
 

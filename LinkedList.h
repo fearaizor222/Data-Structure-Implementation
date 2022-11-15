@@ -54,13 +54,9 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
-        LinkedList(DArray<type> other){
-            for(int i = 0; i<other.size(); i++){
-                this->addBack(other[i]);
-            }
-        }
+        LinkedList<type, Singly> &operator=(const LinkedList<type, Singly> &other){
+            if(this == &other) return *this;
 
-        void assign(const LinkedList<type, Singly> &other){
             this->clear();
             Node *temp = other.head;
 
@@ -68,21 +64,29 @@ template<class type> class LinkedList<type, Singly>{
                 this->addBack(temp->data);
                 temp = temp->next;
             }
+
+            return *this;
         }
 
-        void assign(DArray<type> other){
-            for(int i = 0; i<other.length; i++){
+        LinkedList<type, Singly> &operator=(DArray<type> other){
+            this->clear();
+            for(int i = 0; i<other.size(); i++){
                 this->addBack(other[i]);
             }
+
+            return *this;
         }
-        
-        void assign(std::initializer_list<type> other){
+
+        LinkedList<type, Singly> &operator=(std::initializer_list<type> other){
+            this->clear();
             typename std::initializer_list<type>::iterator it = other.begin();
 
             while(it != other.end()){
                 this->addBack(*it);
                 it++;
             }
+
+            return *this;
         }
 
         LinkedList<type, Singly> range(int start, int end){

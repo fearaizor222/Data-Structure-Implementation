@@ -61,16 +61,16 @@ public:
 		else return data[index];
 	}
 
-	// DArray<type> &operator=(DArray<type> &k){  Don't use this, it won't accept rvalue, use the assign method
-	// 	if(this == &k) return *this;
+	DArray<type> &operator=(const DArray<type> &k){
+		if(this == &k) return *this;
 
-	// 	this->resize(k.length);
-	// 	for(int i = 0; i<k.length; i++){
-	// 		data[i] = k[i];
-	// 	}
+		this->resize(k.length);
+		for(int i = 0; i<k.length; i++){
+			data[i] = k.data[i];
+		}
 
-	// 	return *this;
-	// }
+		return *this;
+	}
 
 	void sort(bool reverse = false){
 		if(reverse){

@@ -39,7 +39,7 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
-        LinkedList(LinkedList<type, Singly> &other) : LinkedList(){
+        LinkedList(const LinkedList<type, Singly> &other) : LinkedList(){
             Node *temp = other.head;
 
             while(temp != nullptr){
@@ -60,7 +60,50 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
-        void extend(LinkedList<type, Singly> &other){
+        void assign(const LinkedList<type, Singly> &other){
+            this->clear();
+            Node *temp = other.head;
+
+            while(temp != nullptr){
+                this->addBack(temp->data);
+                temp = temp->next;
+            }
+        }
+
+        void assign(DArray<type> other){
+            for(int i = 0; i<other.length; i++){
+                this->addBack(other[i]);
+            }
+        }
+        
+        void assign(std::initializer_list<type> other){
+            typename std::initializer_list<type>::iterator it = other.begin();
+
+            while(it != other.end()){
+                this->addBack(*it);
+                it++;
+            }
+        }
+
+        LinkedList<type, Singly> range(int start, int end){
+            int counter = 0;
+            Node *temp = head;
+
+            while(counter < start){
+                temp = temp->next;
+                counter++;
+            }
+
+            LinkedList<type, Singly> tempo;
+            for(int i = 0; i<end - start; i++){
+                tempo.addBack(temp->data);
+                temp = temp->next;
+            }
+
+            return tempo;
+        }
+
+        void extend(const LinkedList<type, Singly> &other){
             Node *temp = other.head;
             
             while(temp != nullptr){
@@ -226,7 +269,7 @@ template<class type> class LinkedList<type, Singly>{
             std::cout<<"\n"<<length<<"\n";
         }
 
-        ~LinkedList(){
+        void clear(){
             Node *temp1 = head;
 
             while(temp1 != nullptr){
@@ -237,6 +280,10 @@ template<class type> class LinkedList<type, Singly>{
 
             head = tail = nullptr;
             length = 0;
+        }
+
+        ~LinkedList(){
+            this->clear();
         }
 
     private:

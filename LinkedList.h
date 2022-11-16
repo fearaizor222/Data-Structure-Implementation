@@ -4,6 +4,7 @@
 #include <iostream>
 #include <initializer_list>
 #include "DArray.h"
+#include <type_traits>
 
 enum Mode{
     Circular,
@@ -60,6 +61,18 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
+        template<class otherType, Mode otherMode> LinkedList<type, Singly> &operator=(const LinkedList<otherType, otherMode> &other){
+            this->clear();
+            typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
+
+            while(temp != nullptr){
+                this->addBack((type)temp->data);
+                temp = temp->next;
+            }
+
+            return *this;
+        }
+
         LinkedList<type, Singly> &operator=(const LinkedList<type, Singly> &other){
             if(this == &other) return *this;
 
@@ -74,21 +87,21 @@ template<class type> class LinkedList<type, Singly>{
             return *this;
         }
 
-        LinkedList<type, Singly> &operator=(DArray<type> other){
+        template<class otherType> LinkedList<type, Singly> &operator=(DArray<otherType> other){
             this->clear();
             for(int i = 0; i<other.size(); i++){
-                this->addBack(other[i]);
+                this->addBack((type)other[i]);
             }
 
             return *this;
         }
 
-        LinkedList<type, Singly> &operator=(std::initializer_list<type> other){
+        template<class otherType> LinkedList<type, Singly> &operator=(std::initializer_list<otherType> other){
             this->clear();
-            typename std::initializer_list<type>::iterator it = other.begin();
+            typename std::initializer_list<otherType>::iterator it = other.begin();
 
             while(it != other.end()){
-                this->addBack(*it);
+                this->addBack((type)(*it));
                 it++;
             }
 
@@ -294,6 +307,10 @@ template<class type> class LinkedList<type, Singly>{
             std::cout<<"\n"<<length<<"\n";
         }
 
+        Node *getHead() const {
+            return head;
+        }
+
         void clear(){
             Node *temp1 = head;
 
@@ -315,6 +332,7 @@ template<class type> class LinkedList<type, Singly>{
         Node *head;
         Node *tail;
         int length;
+
 };
 
 template<class type> class LinkedList<type, Doubly>{

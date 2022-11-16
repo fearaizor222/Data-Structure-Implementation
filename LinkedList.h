@@ -4,7 +4,6 @@
 #include <iostream>
 #include <initializer_list>
 #include "DArray.h"
-#include <type_traits>
 
 enum Mode{
     Circular,

@@ -35,33 +35,30 @@ template<class type> class LinkedList<type, Singly>{
             length = 0;
         }
 
-        LinkedList(std::initializer_list<type> other) : LinkedList(){
-            typename std::initializer_list<type>::iterator it = other.begin();
+        template<class otherType>
+        LinkedList(std::initializer_list<otherType> other) : LinkedList(){
+            typename std::initializer_list<otherType>::iterator it = other.begin();
 
             while(it != other.end()){
-                this->addBack(*it);
+                this->addBack((type)(*it));
                 it++;
             }
         }
 
-        LinkedList(const LinkedList<type, Singly> &other) : LinkedList(){
-            Node *temp = other.getHead();
+        template<class otherType, Mode otherMode>
+        LinkedList(const LinkedList<otherType, otherMode> &other) : LinkedList(){
+            typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
 
             while(temp != nullptr){
-                this->addBack(temp->data);
+                this->addBack((type)temp->data);
                 temp = temp->next;
             }
         }
 
-        LinkedList(type *ptr, int length) : LinkedList(){
-            for(int i = 0; i<length; i++){
-                this->addBack(ptr[i]);
-            }
-        }
-
-        LinkedList(DArray<type> other) : LinkedList(){
+        template<class otherType>
+        LinkedList(DArray<otherType> other) : LinkedList(){
             for(int i = 0; i<other.size(); i++){
-                this->addBack(other[i]);
+                this->addBack((type)other[i]);
             }
         }
 

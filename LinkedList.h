@@ -311,6 +311,10 @@ template<class type> class LinkedList<type, Singly>{
             return head;
         }
 
+        Node *getTail() const {
+            return tail;
+        }        
+
         void clear(){
             Node *temp1 = head;
 

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <initializer_list>
+#include <iterator>
 #include "DArray.h"
 
 enum Mode{
@@ -24,7 +25,8 @@ template<class type> class LinkedList<type, Singly>{
                 next = nullptr;
             }
 
-            template<class otherType> Node(otherType data){
+            template<class otherType> 
+            Node(otherType data){
                 this->data = (type)data;
                 next = nullptr;
             }
@@ -40,7 +42,7 @@ template<class type> class LinkedList<type, Singly>{
             typename std::initializer_list<otherType>::iterator it = other.begin();
 
             while(it != other.end()){
-                this->addBack((type)(*it));
+                this->addBack(*it);
                 it++;
             }
         }
@@ -50,7 +52,7 @@ template<class type> class LinkedList<type, Singly>{
             typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
 
             while(temp != nullptr){
-                this->addBack((type)temp->data);
+                this->addBack(temp->data);
                 temp = temp->next;
             }
         }
@@ -58,7 +60,7 @@ template<class type> class LinkedList<type, Singly>{
         template<class otherType>
         LinkedList(DArray<otherType> other) : LinkedList(){
             for(int i = 0; i<other.size(); i++){
-                this->addBack((type)other[i]);
+                this->addBack(other[i]);
             }
         }
 
@@ -68,7 +70,7 @@ template<class type> class LinkedList<type, Singly>{
             typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
 
             while(temp != nullptr){
-                this->addBack((type)temp->data);
+                this->addBack(temp->data);
                 temp = temp->next;
             }
 
@@ -93,7 +95,7 @@ template<class type> class LinkedList<type, Singly>{
         LinkedList<type, Singly> &operator=(DArray<otherType> other){
             this->clear();
             for(int i = 0; i<other.size(); i++){
-                this->addBack((type)other[i]);
+                this->addBack(other[i]);
             }
 
             return *this;
@@ -105,7 +107,7 @@ template<class type> class LinkedList<type, Singly>{
             typename std::initializer_list<otherType>::iterator it = other.begin();
 
             while(it != other.end()){
-                this->addBack((type)(*it));
+                this->addBack(*it);
                 it++;
             }
 
@@ -115,7 +117,7 @@ template<class type> class LinkedList<type, Singly>{
         template<class otherType> 
         void assign(otherType *ptr, int length){
             for(int i = 0; i<length; i++){
-                this->addBack((type)ptr[i]);
+                this->addBack(ptr[i]);
             }
         }
 
@@ -142,7 +144,7 @@ template<class type> class LinkedList<type, Singly>{
             typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
             
             while(temp != nullptr){
-                this->addBack((type)temp->data);
+                this->addBack(temp->data);
                 temp = temp->next;
             }
         }
@@ -152,7 +154,7 @@ template<class type> class LinkedList<type, Singly>{
             typename std::initializer_list<otherType>::iterator it = other.begin();
 
             while(it != other.end()){
-                this->addBack((type)(*it));
+                this->addBack(*it);
                 it++;
             }
         }
@@ -160,14 +162,14 @@ template<class type> class LinkedList<type, Singly>{
         template<class otherType>
         void extend(DArray<otherType> other){
             for(int i = 0; i<other.size(); i++){
-                this->addBack((type)other[i]);
+                this->addBack(other[i]);
             }
         }
 
         template<class otherType>
         void extend(otherType *ptr, int length){
             for(int i = 0; i<length; i++){
-                this->addBack((type)ptr[i]);
+                this->addBack(ptr[i]);
             }
         }
 
@@ -375,7 +377,87 @@ template<class type> class LinkedList<type, Doubly>{
                 next = nullptr;
                 prev = nullptr;
             }
+
+            template<class otherType> 
+            Node(otherType data){
+                this->data = (type)data;
+                next = nullptr;
+                prev = nullptr;
+            }
         };
+
+        int size() const {
+            return length;
+        }
+
+        Node *getHead() const {
+            return head;
+        }
+
+        Node *getTail() const {
+            return tail;
+        }
+
+        LinkedList(){
+            head = tail = nullptr;
+            length = 0;
+        }
+
+        template<class otherType, Mode otherMode>
+        LinkedList(const LinkedList<otherType, otherMode> &other) : LinkedList(){
+            typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
+
+            while(temp != nullptr){
+                this->addBack(temp->data);
+                temp = temp->next;
+            }
+        }
+
+        template<class otherType>   
+        void addBack(otherType data){
+            Node *temp = new Node(data);
+
+            if(head == nullptr){
+                head = tail = temp;
+                length++;
+            }
+            else{
+                tail->next = temp;
+                temp->prev = tail;
+                tail = temp;
+                length++;
+            }
+        }
+
+        template<class otherType>   
+        void addFront(otherType data){
+            Node *temp = new Node(data);
+
+            if(head == nullptr){
+                head = tail = temp;
+                length++;
+            }
+            else{
+                temp->next = head;
+                head->prev = temp;
+                head = temp;
+                length++;
+            }
+        }
+
+        void print(){
+            Node *temp = head;
+
+            while(temp != nullptr){
+                std::cout<<temp->data<<" ";
+                temp = temp->next;
+            }
+            std::cout<<std::endl<<length<<std::endl;
+        }
+
+        void clear(){
+
+        }
 
     private:
         Node *head;

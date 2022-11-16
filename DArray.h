@@ -3,7 +3,6 @@
 #include <stdexcept>
 #include <iostream>
 #include <initializer_list>
-// #include <string>
 
 template<class type> class DArray {
 private:
@@ -11,16 +10,21 @@ private:
 	long long length;
 
 public:
+	type *getData() const {
+		return data;
+	}
+
 	DArray(){
 		length = 0;
 		data = nullptr;
 	}
 
-	DArray(DArray<type> &k){
-		length = k.length;
+	template<class otherType>
+	DArray(DArray<otherType> &k){
+		length = k.size();
 		data = new type[length];
 		for(int i = 0; i<length; i++){
-			data[i] = k.data[i];
+			data[i] = (type)k.getData()[i];
 		}
 	}
 
@@ -29,29 +33,32 @@ public:
 		data = new type[length];
 	}
 
-	DArray(int number, int element){
-		length = number;
+	template<class otherType>
+	DArray(otherType element, int length){
+		this->length = length;
 		data = new type[length];
 		for(int i = 0; i<length; i++){
-			data[i] = element;
+			data[i] = (type)element;
 		}
 	}
 
-	DArray(type arr[], int number){
-		length = number;
+	template<class otherType>
+	DArray(otherType arr[], int length){
+		this->length = length;
 		data = new type[length];
 		for(int i = 0; i<length; i++){
-			data[i] = arr[i];
+			data[i] = (type)arr[i];
 		}
 	}
 
-	DArray(std::initializer_list<type> arr){
+	template<class otherType>
+	DArray(std::initializer_list<otherType> arr){
 		length = arr.size();
 		data = new type[length];
 
-		typename std::initializer_list<type>::iterator it = arr.begin();
+		typename std::initializer_list<otherType>::iterator it = arr.begin();
 		for(int i = 0; i<length; i++){
-			data[i] = (*it);
+			data[i] = (type)(*it);
 			it++;
 		}
 	}
@@ -61,15 +68,37 @@ public:
 		else return data[index];
 	}
 
-	DArray<type> &operator=(const DArray<type> &k){
-		if(this == &k) return *this;
-
-		this->resize(k.length);
-		for(int i = 0; i<k.length; i++){
-			data[i] = k.data[i];
+	template<class otherType>
+	DArray<type> &operator=(const DArray<otherType> &k){
+		this->resize(k.size());
+		for(int i = 0; i<length; i++){
+			data[i] = (type)k.getData()[i];
 		}
 
 		return *this;
+	}
+
+	DArray<type> &operator=(const DArray<type> &k){
+		if(this == &k) return *this;
+
+		this->resize(k.size());
+		for(int i = 0; i<length; i++){
+			data[i] = k.getData()[i];
+		}
+
+		return *this;
+	}
+
+	template<class otherType>
+	DArray<type> &operator=(std::initializer_list<otherType> other){
+		this->clear();
+
+		typename std::initializer_list<otherType>::iterator it = other.begin();
+
+		while(it != other.end()){
+			this->addBack((type)(*it));
+			it++;
+		}
 	}
 
 	void sort(bool reverse = false){
@@ -97,27 +126,10 @@ public:
 		}
 	}
 
-	void assign(const DArray<type> &k){
-		this->resize(k.length);
-		for(int i = 0; i<k.length; i++){
-			data[i] = k.data[i];
-		}
-	}
-
 	void assign(type arr[], int lengtharr){
 		this->resize(lengtharr);
 		for(int i = 0; i<lengtharr; i++){
 			data[i] = arr[i];
-		}
-	}
-
-	void assign(std::initializer_list<type> arr){
-		this->resize(arr.size());
-		typename std::initializer_list<type>::iterator it = arr.begin();
-		
-		for(int i = 0; i<length; i++){
-			data[i] = *it;
-			it++;
 		}
 	}
 
@@ -149,15 +161,14 @@ public:
 	DArray<type> range(int start, int end){
 		if(end > length) throw std::invalid_argument("Unvalid range");
 		DArray<type> temp;
-		temp.resize(end - start);
-		for(int i = start, j = 0; i<end; i++, j++){
-			temp[j] = data[i];
+		for(int i = start; i<end; i++){
+			temp.addBack(this->data[i]);
 		}
 
 		return temp;
 	}
 
-	int size(){
+	int size() const {
 		return length;
 	}
 
@@ -203,25 +214,28 @@ public:
 		}
 	}
 
-	void addBack(type number){
+	template<class otherType>
+	void addBack(otherType number){
 		length++;
 		resize(length);
-		data[length - 1] = number;
+		data[length - 1] = (type)number;
 	}
 
-	void addFront(type number){
+	template<class otherType>
+	void addFront(otherType number){
 		length++;
 		type *temp = new type[length];
 		for(int i = 0, j = 1; i<length-1; i++, j++){
 			temp[j] = data[i];
 		}
 
-		temp[0] = number;
+		temp[0] = (type)number;
 		delete[] data;
 		data = temp;
 	}
 
-	void addIndex(type number, int index){
+	template<class otherType>
+	void addIndex(otherType number, int index){
 		if(index > length || index < 0) throw std::invalid_argument("Invalid index");
 		length++;
 		resize(length);
@@ -232,7 +246,7 @@ public:
 				temp1 = temp2;
 		}
 
-		data[index] = number;
+		data[index] = (type)number;
 	}
 
 	void deleteBack(){

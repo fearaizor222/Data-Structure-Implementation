@@ -24,6 +24,11 @@ template<class type> class LinkedList<type, Singly>{
                 this->data = data;
                 next = nullptr;
             }
+
+            template<class otherType> Node(otherType data){
+                this->data = (type)data;
+                next = nullptr;
+            }
         };
 
         LinkedList(){
@@ -61,7 +66,8 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
-        template<class otherType, Mode otherMode> LinkedList<type, Singly> &operator=(const LinkedList<otherType, otherMode> &other){
+        template<class otherType, Mode otherMode> 
+        LinkedList<type, Singly> &operator=(const LinkedList<otherType, otherMode> &other){
             this->clear();
             typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
 
@@ -87,7 +93,8 @@ template<class type> class LinkedList<type, Singly>{
             return *this;
         }
 
-        template<class otherType> LinkedList<type, Singly> &operator=(DArray<otherType> other){
+        template<class otherType> 
+        LinkedList<type, Singly> &operator=(DArray<otherType> other){
             this->clear();
             for(int i = 0; i<other.size(); i++){
                 this->addBack((type)other[i]);
@@ -96,7 +103,8 @@ template<class type> class LinkedList<type, Singly>{
             return *this;
         }
 
-        template<class otherType> LinkedList<type, Singly> &operator=(std::initializer_list<otherType> other){
+        template<class otherType> 
+        LinkedList<type, Singly> &operator=(std::initializer_list<otherType> other){
             this->clear();
             typename std::initializer_list<otherType>::iterator it = other.begin();
 
@@ -106,6 +114,13 @@ template<class type> class LinkedList<type, Singly>{
             }
 
             return *this;
+        }
+
+        template<class otherType> 
+        void assign(otherType *ptr, int length){
+            for(int i = 0; i<length; i++){
+                this->addBack((type)ptr[i]);
+            }
         }
 
         LinkedList<type, Singly> range(int start, int end){
@@ -126,27 +141,37 @@ template<class type> class LinkedList<type, Singly>{
             return tempo;
         }
 
-        void extend(const LinkedList<type, Singly> &other){
-            Node *temp = other.head;
+        template<class otherType, Mode otherMode> 
+        void extend(const LinkedList<otherType, otherMode> &other){
+            typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
             
             while(temp != nullptr){
-                this->addBack(temp->data);
+                this->addBack((type)temp->data);
                 temp = temp->next;
             }
         }
 
-        void extend(std::initializer_list<type> other){
-            typename std::initializer_list<type>::iterator it = other.begin();
+        template<class otherType>
+        void extend(std::initializer_list<otherType> other){
+            typename std::initializer_list<otherType>::iterator it = other.begin();
 
             while(it != other.end()){
-                this->addBack(*it);
+                this->addBack((type)(*it));
                 it++;
             }
         }
 
-        void extend(DArray<type> other){
+        template<class otherType>
+        void extend(DArray<otherType> other){
             for(int i = 0; i<other.size(); i++){
-                this->addBack(other[i]);
+                this->addBack((type)other[i]);
+            }
+        }
+
+        template<class otherType>
+        void extend(otherType *ptr, int length){
+            for(int i = 0; i<length; i++){
+                this->addBack((type)ptr[i]);
             }
         }
 
@@ -172,7 +197,8 @@ template<class type> class LinkedList<type, Singly>{
             return temp->data;
         }
 
-        void addBack(type data){
+        template<class otherType>
+        void addBack(otherType data){
             Node *temp = new Node(data);
 
             if(head == nullptr){
@@ -186,7 +212,8 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
-        void addFront(type data){
+        template<class otherType>
+        void addFront(otherType data){
             Node *temp = new Node(data);
 
             if(head == nullptr){
@@ -200,7 +227,8 @@ template<class type> class LinkedList<type, Singly>{
             }
         }
 
-        void addIndex(type data, int index){
+        template<class otherType>
+        void addIndex(otherType data, int index){
             if(index <= 0) this->addFront(data);
             else if(index > length) this->addBack(data);
             else{
@@ -357,7 +385,7 @@ template<class type> class LinkedList<type, Doubly>{
         Node *head;
         Node *tail;
         int length;
-        
+
 };
 
 template<class type> class LinkedList<type, Circular>{

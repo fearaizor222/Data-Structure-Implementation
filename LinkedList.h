@@ -357,6 +357,7 @@ template<class type> class LinkedList<type, Doubly>{
         Node *head;
         Node *tail;
         int length;
+        
 };
 
 template<class type> class LinkedList<type, Circular>{
@@ -377,6 +378,7 @@ template<class type> class LinkedList<type, Circular>{
         Node *head;
         Node *tail;
         int length;
+
 };
 
 #endif

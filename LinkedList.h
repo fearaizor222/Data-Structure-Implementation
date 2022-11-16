@@ -45,7 +45,7 @@ template<class type> class LinkedList<type, Singly>{
         }
 
         LinkedList(const LinkedList<type, Singly> &other) : LinkedList(){
-            Node *temp = other.head;
+            Node *temp = other.getHead();
 
             while(temp != nullptr){
                 this->addBack(temp->data);
@@ -82,7 +82,7 @@ template<class type> class LinkedList<type, Singly>{
             if(this == &other) return *this;
 
             this->clear();
-            Node *temp = other.head;
+            Node *temp = other.getHead();
 
             while(temp != nullptr){
                 this->addBack(temp->data);

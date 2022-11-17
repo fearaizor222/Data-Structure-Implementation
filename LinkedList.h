@@ -434,6 +434,13 @@ template<class type> class LinkedList<type, Doubly>{
             }
         }
 
+        template<class otherType>
+        LinkedList(DArray<otherType> other) : LinkedList(){
+            for(int i = 0; i<other.size(); i++){
+                this->addBack(other[i]);
+            }
+        }
+
         template<class otherType>   
         void addBack(otherType data){
             Node *temp = new Node(data);

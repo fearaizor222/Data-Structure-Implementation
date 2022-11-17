@@ -542,26 +542,25 @@ template<class type> class LinkedList<type, Doubly>{
                 length--;
             }
             else{
-                Node *temp_head = head;
-                int internal_counter = 0;
-
-                while(internal_counter < index && temp_head->next != nullptr){
-                    temp_head = temp_head->next;
-                    internal_counter++;
-                }
-                
-                if(temp_head->prev == nullptr){
+                if(index <= 0){
                     this->deleteFront();
                     return;
                 }
-                if(temp_head->next == nullptr){
+                else if(index >= length - 1){
                     this->deleteBack();
                     return;
                 }
 
-                Node *temp_prev = temp_head->prev;
-                temp_prev->next = temp_head->next;
-                temp_head->next->prev = temp_prev;
+                Node *temp_head = head;
+                int internal_counter = 0;
+
+                while(internal_counter < index){
+                    temp_head = temp_head->next;
+                    internal_counter++;
+                }
+
+                temp_head->prev->next = temp_head->next;
+                temp_head->next->prev = temp_head->prev;
 
                 delete temp_head;
 

@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <initializer_list>
-#include <iterator>
 #include "DArray.h"
 
 enum Mode{

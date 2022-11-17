@@ -302,34 +302,29 @@ template<class type> class LinkedList<type, Singly>{
                 return;
             }
             else{
-                Node *del = head;
-                int internal_counter = 0;
-
-                while(internal_counter < index && del->next != nullptr){
-                    del = del->next;
-                    internal_counter++;
-                }
-
-                if(del == head){
+                if(index <= 0){
                     this->deleteFront();
                     return;
                 }
-                if(del->next == nullptr){
+                else if(index >= length - 1){
                     this->deleteBack();
                     return;
                 }
 
                 Node *temp_head = head;
-                internal_counter = 0;
-                while(internal_counter < index - 1){
-                    temp_head = temp_head->next;
-                    internal_counter++;
-                }                
+                int internal_counter = 0;
 
-                Node *after = del->next;
-                temp_head->next = after;
+                while(internal_counter++ < index - 1){
+                    temp_head = temp_head->next;
+                }
+
+                Node *del = temp_head->next;
+                Node *alt = del->next;
+
+                temp_head->next = alt;
 
                 delete del;
+                
                 length--;
             }
         }

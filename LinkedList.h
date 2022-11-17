@@ -585,7 +585,20 @@ template<class type> class LinkedList<type, Doubly>{
         }
 
         void clear(){
+            Node *temp1 = head;
 
+            while(temp1 != nullptr){
+                Node *temp2 = temp1;
+                temp1 = temp2->next;
+                delete temp2;
+            }
+
+            head = tail = nullptr;
+            length = 0;
+        }
+
+        ~LinkedList(){
+            this->clear();
         }
 
     private:

@@ -551,18 +551,18 @@ template<class type> class LinkedList<type, Doubly>{
                     return;
                 }
 
-                Node *temp_head = head;
+                Node *del = head;
                 int internal_counter = 0;
 
                 while(internal_counter < index){
-                    temp_head = temp_head->next;
+                    del = del->next;
                     internal_counter++;
                 }
 
-                temp_head->prev->next = temp_head->next;
-                temp_head->next->prev = temp_head->prev;
+                del->prev->next = del->next;
+                del->next->prev = del->prev;
 
-                delete temp_head;
+                delete del;
 
                 length--;
             }

@@ -302,18 +302,34 @@ template<class type> class LinkedList<type, Singly>{
                 return;
             }
             else{
-                Node *temp1 = head;
-                int counter = 0;
+                Node *del = head;
+                int internal_counter = 0;
 
-                while(temp1->next->next != nullptr && counter < index-1){
-                    temp1 = temp1->next;
-                    counter++;
+                while(internal_counter < index && del->next != nullptr){
+                    del = del->next;
+                    internal_counter++;
                 }
 
-                Node *temp2 = temp1->next;
-                temp1->next = temp2->next;
-                delete temp2;
+                if(del == head){
+                    this->deleteFront();
+                    return;
+                }
+                if(del->next == nullptr){
+                    this->deleteBack();
+                    return;
+                }
 
+                Node *temp_head = head;
+                internal_counter = 0;
+                while(internal_counter < index - 1){
+                    temp_head = temp_head->next;
+                    internal_counter++;
+                }                
+
+                Node *after = del->next;
+                temp_head->next = after;
+
+                delete del;
                 length--;
             }
         }
@@ -473,6 +489,88 @@ template<class type> class LinkedList<type, Doubly>{
                 temp->prev = temp_head;
                 temp_head->next = temp;
                 length++;
+            }
+        }
+
+        void deleteBack(){
+            if(head == nullptr) return;
+            else if(head->next == nullptr){
+                Node *temp = head;
+                
+                head = nullptr;
+                delete temp;
+
+                length--;
+            }
+            else{
+                Node *temp_tail = tail;
+                Node *temp = tail->prev;
+
+                tail = temp;
+                tail->next = nullptr;
+                delete temp_tail;
+
+                length--;
+            }
+        }
+
+        void deleteFront(){
+            if(head == nullptr) return;
+            else if(head->next == nullptr){
+                Node *temp = head;
+                
+                head = nullptr;
+                delete temp;
+
+                length--;
+            }
+            else{
+                Node *temp = head->next;
+                Node *temp_head = head;
+
+                temp->prev = nullptr;
+                head = temp;
+                delete temp_head;
+
+                length--;
+            }
+        }
+
+        void deleteIndex(int index){
+            if(head == nullptr) return;
+            else if(head->next == nullptr){
+                Node *temp = head;
+                
+                head = nullptr;
+                delete temp;
+
+                length--;
+            }
+            else{
+                Node *temp_head = head;
+                int internal_counter = 0;
+
+                while(internal_counter < index && temp_head->next != nullptr){
+                    temp_head = temp_head->next;
+                    internal_counter++;
+                }
+                
+                if(temp_head->prev == nullptr){
+                    this->deleteFront();
+                    return;
+                }
+                if(temp_head->next == nullptr){
+                    this->deleteBack();
+                    return;
+                }
+
+                Node *temp_prev = temp_head->prev;
+                temp_prev->next = temp_head->next;
+                temp_head->next->prev = temp_prev;
+
+                delete temp_head;
+
+                length--;
             }
         }
 

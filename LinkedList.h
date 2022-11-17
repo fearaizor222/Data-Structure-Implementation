@@ -390,7 +390,7 @@ template<class type> class LinkedList<type, Doubly>{
             return length;
         }
 
-        Node *getHead() const {
+        Node *getHead(){
             return head;
         }
 
@@ -410,6 +410,16 @@ template<class type> class LinkedList<type, Doubly>{
             while(temp != nullptr){
                 this->addBack(temp->data);
                 temp = temp->next;
+            }
+        }
+
+        template<class otherType>
+        LinkedList(std::initializer_list<otherType> other) : LinkedList(){
+            typename std::initializer_list<otherType>::iterator it = other.begin();
+
+            while(it != other.end()){
+                this->addBack(*it);
+                it++;
             }
         }
 
@@ -441,6 +451,27 @@ template<class type> class LinkedList<type, Doubly>{
                 temp->next = head;
                 head->prev = temp;
                 head = temp;
+                length++;
+            }
+        }
+
+        template<class otherType>   
+        void addIndex(otherType data, int index){
+            if(index <= 0) this->addFront(data);
+            else if(index > length) this->addBack(data);
+            else{
+                Node *temp = new Node(data);
+                int internal_index = 0;
+                Node *temp_head = head;
+
+                while(internal_index < index - 1){
+                    temp_head = temp_head->next;
+                    internal_index++;
+                }
+
+                temp->next = temp_head->next;
+                temp->prev = temp_head;
+                temp_head->next = temp;
                 length++;
             }
         }

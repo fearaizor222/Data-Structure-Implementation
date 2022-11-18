@@ -440,6 +440,15 @@ template<class type> class LinkedList<type, Doubly>{
             }
         }
 
+        template<class otherType>
+        void assign(otherType *ptr, int length){
+            this->clear();
+
+            for(int i = 0; i<length; i++){
+                this->addBack(ptr[i]);
+            }
+        }
+
         template<class otherType>   
         void addBack(otherType data){
             Node *temp = new Node(data);

@@ -518,6 +518,28 @@ template<class type> class LinkedList<type, Doubly>{
             return temp;
         }
 
+        type &at(int index){
+            Node *temp = head;
+            int internal_index = 0;
+
+            if(index >= length) throw std::invalid_argument("Out of bound");
+            else if(index < 0 && length + index >= 0){
+                while(internal_index < length + index){
+                    temp = temp->next;
+                    internal_index++;
+                }
+                
+                return temp->data;
+            }
+
+            while(internal_index < index){
+                    temp = temp->next;
+                    internal_index++;
+                }
+
+            return temp->data;
+        }
+
         template<class otherType, Mode otherMode> 
         void extend(const LinkedList<otherType, otherMode> &other){
             typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();

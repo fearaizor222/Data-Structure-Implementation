@@ -400,11 +400,11 @@ template<class type> class LinkedList<type, Doubly>{
             return length;
         }
 
-        Node *getHead(){
+        Node *getHead() const{
             return head;
         }
 
-        Node *getTail() const {
+        Node *getTail() const{
             return tail;
         }
 
@@ -440,10 +440,113 @@ template<class type> class LinkedList<type, Doubly>{
             }
         }
 
+        template<class otherType, Mode otherMode>
+        LinkedList<type, Doubly> &operator=(const LinkedList<otherType, otherMode> &other){
+            this->clear();
+            typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
+
+            while(temp != nullptr){
+                this->addBack(temp->data);
+                temp = temp->next;
+            }
+
+            return *this;
+        }
+
+        LinkedList<type, Doubly> &operator=(const LinkedList<type, Doubly> &other){
+            if(this == &other) return *this;
+
+            this->clear();
+            Node *temp = other.getHead();
+
+            while(temp != nullptr){
+                this->addBack(temp->data);
+                temp = temp->next;
+            }
+
+            return *this;
+        }
+
+        template<class otherType> 
+        LinkedList<type, Doubly> &operator=(DArray<otherType> other){
+            this->clear();
+            for(int i = 0; i<other.size(); i++){
+                this->addBack(other[i]);
+            }
+
+            return *this;
+        }
+
+        template<class otherType> 
+        LinkedList<type, Doubly> &operator=(std::initializer_list<otherType> other){
+            this->clear();
+            typename std::initializer_list<otherType>::iterator it = other.begin();
+
+            while(it != other.end()){
+                this->addBack(*it);
+                it++;
+            }
+
+            return *this;
+        }
+
         template<class otherType>
         void assign(otherType *ptr, int length){
             this->clear();
 
+            for(int i = 0; i<length; i++){
+                this->addBack(ptr[i]);
+            }
+        }
+
+        LinkedList<type, Doubly> range(int start, int end){
+            LinkedList<type, Doubly> temp;
+            Node *temp_head = getHead();
+
+            int internal_index = 0;
+            while(internal_index < start){
+                temp_head = temp_head->next;
+                internal_index++;
+            }
+
+            while(internal_index < end){
+                temp.addBack(temp_head->data);
+                temp_head = temp_head->next;
+                internal_index++;
+            }
+
+            return temp;
+        }
+
+        template<class otherType, Mode otherMode> 
+        void extend(const LinkedList<otherType, otherMode> &other){
+            typename LinkedList<otherType, otherMode>::Node *temp = other.getHead();
+            
+            while(temp != nullptr){
+                this->addBack(temp->data);
+                temp = temp->next;
+            }
+        }
+
+        template<class otherType>
+        void extend(std::initializer_list<otherType> other){
+            typename std::initializer_list<otherType>::iterator it = other.begin();
+
+            while(it != other.end()){
+                this->addBack(*it);
+                it++;
+            }
+        }
+
+        template<class otherType>
+        void extend(DArray<otherType> other){
+            for(int i = 0; i<other.size(); i++){
+                this->addBack(other[i]);
+            }
+        }
+
+        template<class otherType>
+        void extend(otherType *ptr, int length){
             for(int i = 0; i<length; i++){
                 this->addBack(ptr[i]);
             }

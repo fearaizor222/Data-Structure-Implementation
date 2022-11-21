@@ -852,6 +852,18 @@ template<class type> class LinkedList<type, Circular>{
             length = 0;
         }
 
+        int size() const {
+            return length;
+        }
+
+        Node *getHead() const {
+            return head;
+        }
+
+        Node *getTail() const {
+            return tail;
+        }
+
         ~LinkedList(){
             this->clear();
         }

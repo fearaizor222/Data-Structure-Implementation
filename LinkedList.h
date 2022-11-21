@@ -754,7 +754,107 @@ template<class type> class LinkedList<type, Circular>{
                 next = nullptr;
                 prev = nullptr;
             }
+
+            template<class otherType>
+            Node(otherType data){
+                this->data = (type)data;
+                next = nullptr;
+                prev = nullptr;
+            }
         };
+
+        LinkedList(){
+            head = tail = nullptr;
+            length = 0;
+        }
+
+        template<class otherType>
+        void addBack(otherType data){
+            Node *temp = new Node(data);
+
+            if(head == nullptr){
+                head = tail = temp;
+                length = 1;
+            }
+            else{
+                temp->next = head;
+                tail->next = temp;
+                temp->prev = tail;
+                tail = temp;
+
+                length++;
+            }
+        }
+
+        template<class otherType>
+        void addFront(otherType data){
+            Node *temp = new Node(data);
+
+            if(head == nullptr){
+                head = tail = temp;
+                length = 1;
+            }
+            else{
+                temp->next = head;
+                tail->next = temp;
+                temp->prev = tail;
+                head = temp;
+
+                length++;
+            }
+        }
+
+        template<class otherType>
+        void addIndex(otherType data, int index){
+            Node *temp_new_data = new Node(data);
+
+            if(index <= 0) this->addFront(data);
+            else if(index >= length) this->addBack(data);
+            else{
+                Node *traversal = head;
+                int internal_index = 0;
+
+                while(internal_index < index - 1){
+                    traversal = traversal->next;
+                    internal_index++;
+                }
+
+                temp_new_data->next = traversal->next;
+                traversal->next = temp_new_data;
+                temp_new_data->prev = traversal;
+
+                length++;
+            }
+        }
+
+        void print(){
+            Node *temp = head;
+
+            while(temp != tail){
+                std::cout<<temp->data<<" ";
+                temp = temp->next;
+            }
+            std::cout<<temp->data<<"\n"<<length<<"\n";
+        }
+
+        void clear(){
+            Node *temp1 = head;
+
+            while(temp1 != tail){
+                Node *temp2 = temp1;
+                temp1 = temp2->next;
+                delete temp2;
+            }
+            Node *temp3 = tail;
+            delete temp3;
+
+            head = tail = nullptr;
+            length = 0;
+        }
+
+        ~LinkedList(){
+            this->clear();
+        }
 
     private:
         Node *head;
